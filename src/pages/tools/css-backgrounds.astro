@@ -50,26 +50,60 @@ background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='ht
 background-image: 
   radial-gradient(at 0% 0%, rgba(76, 29, 149, 0.3) 0px, transparent 50%),
   radial-gradient(at 100% 100%, rgba(37, 99, 235, 0.3) 0px, transparent 50%);`
+  },
+  {
+    name: 'Zig Zag',
+    id: 'zigzag',
+    class: 'bg-zigzag',
+    css: `background-color: #111;
+background-image:  linear-gradient(135deg, #000 25%, transparent 25%),
+linear-gradient(225deg, #000 25%, transparent 25%),
+linear-gradient(45deg, #000 25%, transparent 25%),
+linear-gradient(315deg, #000 25%, transparent 25%);
+background-position:  10px 0, 10px 0, 0 0, 0 0;
+background-size: 20px 20px;
+background-repeat: repeat;`
+  },
+  {
+    name: 'Polka Dots',
+    id: 'polka',
+    class: 'bg-polka',
+    css: `background-color: #0a0a0a;
+background-image: radial-gradient(#333 1px, transparent 1px), radial-gradient(#333 1px, #0a0a0a 1px);
+background-size: 20px 20px;
+background-position: 0 0, 10px 10px;`
+  },
+  {
+    name: 'Blueprint',
+    id: 'blueprint',
+    class: 'bg-blueprint',
+    css: `background-color: #269;
+background-image: linear-gradient(rgba(255,255,255,.2) 2px, transparent 2px),
+linear-gradient(90deg, rgba(255,255,255,.2) 2px, transparent 2px),
+linear-gradient(rgba(255,255,255,.1) 1px, transparent 1px),
+linear-gradient(90deg, rgba(255,255,255,.1) 1px, transparent 1px);
+background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
+background-position: -2px -2px, -2px -2px, -1px -1px, -1px -1px;`
   }
 ];
 ---
 
 <Layout>
   <div class="text-center mb-12">
-    <h1 class="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-white to-white/60 mb-3">CSS Backgrounds</h1>
-    <p class="text-white/50">Curated collection of drop-in CSS background snippets.</p>
+    <h1 class="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-gray-900 to-gray-500 dark:from-white dark:to-white/60 mb-3">CSS Backgrounds</h1>
+    <p class="text-gray-600 dark:text-white/50">Curated collection of drop-in CSS background snippets.</p>
   </div>
 
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
     {backgrounds.map((bg) => (
-      <div class="group relative bg-[#111] border border-white/10 rounded-xl overflow-hidden hover:border-white/20 transition-all">
+      <div class="group relative bg-white dark:bg-[#111] border border-black/5 dark:border-white/10 rounded-xl overflow-hidden hover:border-black/20 dark:hover:border-white/20 transition-all shadow-sm dark:shadow-none">
         <!-- Preview -->
         <div class={`h-48 w-full ${bg.class}`} id={`preview-${bg.id}`}></div>
         
         <!-- Info & Actions -->
-        <div class="p-4 flex items-center justify-between border-t border-white/5 bg-[#0a0a0a]">
-           <span class="font-medium text-white/80">{bg.name}</span>
-           <button class="copy-btn px-3 py-1.5 text-xs font-medium rounded-lg bg-white/10 hover:bg-white/20 text-white transition-colors" data-css={bg.css}>
+        <div class="p-4 flex items-center justify-between border-t border-black/5 dark:border-white/5 bg-gray-50 dark:bg-[#0a0a0a]">
+           <span class="font-medium text-gray-800 dark:text-white/80">{bg.name}</span>
+           <button class="copy-btn px-3 py-1.5 text-xs font-medium rounded-lg bg-gray-200 dark:bg-white/10 hover:bg-gray-300 dark:hover:bg-white/20 text-gray-900 dark:text-white transition-colors" data-css={bg.css}>
              Copy CSS
            </button>
         </div>
@@ -79,19 +113,27 @@ background-image:
 </Layout>
 
 <style>
+  /* Note: These previews are hardcoded to "dark" aesthetics because they illustrate "backgrounds" which happen to be dark in this collection. 
+     If we wanted light versions we'd need alternative CSS for light mode. 
+     For now, we keep the previews as is because they represent specific snippets. */
+     
   .bg-grid {
+    background-color: #1a1a1a;
     background-size: 40px 40px;
     background-image: linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
   }
   .bg-dots {
+    background-color: #1a1a1a;
     background-size: 20px 20px;
     background-image: radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px);
   }
   .bg-noise {
+    background-color: #1a1a1a;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.15'/%3E%3C/svg%3E");
   }
   .bg-stripes {
+    background-color: #1a1a1a;
     background-image: repeating-linear-gradient(
       45deg,
       rgba(255, 255, 255, 0.03) 0px,
@@ -109,6 +151,31 @@ background-image:
       radial-gradient(at 0% 0%, rgba(76, 29, 149, 0.3) 0px, transparent 50%),
       radial-gradient(at 100% 100%, rgba(37, 99, 235, 0.3) 0px, transparent 50%);
   }
+  .bg-zigzag {
+    background-color: #111;
+    background-image:  linear-gradient(135deg, #000 25%, transparent 25%),
+    linear-gradient(225deg, #000 25%, transparent 25%),
+    linear-gradient(45deg, #000 25%, transparent 25%),
+    linear-gradient(315deg, #000 25%, transparent 25%);
+    background-position:  10px 0, 10px 0, 0 0, 0 0;
+    background-size: 20px 20px;
+    background-repeat: repeat;
+  }
+  .bg-polka {
+    background-color: #0a0a0a;
+    background-image: radial-gradient(#333 1px, transparent 1px), radial-gradient(#333 1px, #0a0a0a 1px);
+    background-size: 20px 20px;
+    background-position: 0 0, 10px 10px;
+  }
+  .bg-blueprint {
+    background-color: #269;
+    background-image: linear-gradient(rgba(255,255,255,.2) 2px, transparent 2px),
+    linear-gradient(90deg, rgba(255,255,255,.2) 2px, transparent 2px),
+    linear-gradient(rgba(255,255,255,.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.1) 1px, transparent 1px);
+    background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
+    background-position: -2px -2px, -2px -2px, -1px -1px, -1px -1px;
+  }
 </style>
 
 <script>
@@ -119,13 +186,13 @@ background-image:
       
       const originalText = btn.innerText;
       btn.innerText = 'Copied!';
-      btn.classList.add('bg-green-500/20', 'text-green-400');
-      btn.classList.remove('bg-white/10', 'text-white');
+      btn.classList.add('bg-green-100', 'dark:bg-green-500/20', 'text-green-600', 'dark:text-green-400');
+      btn.classList.remove('bg-gray-200', 'dark:bg-white/10', 'text-gray-900', 'dark:text-white');
       
       setTimeout(() => {
         btn.innerText = originalText;
-        btn.classList.remove('bg-green-500/20', 'text-green-400');
-        btn.classList.add('bg-white/10', 'text-white');
+        btn.classList.remove('bg-green-100', 'dark:bg-green-500/20', 'text-green-600', 'dark:text-green-400');
+        btn.classList.add('bg-gray-200', 'dark:bg-white/10', 'text-gray-900', 'dark:text-white');
       }, 2000);
     });
   });

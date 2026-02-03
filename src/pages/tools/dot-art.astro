@@ -138,7 +138,7 @@ import Layout from "../../layouts/Layout.astro";
                         class="flex p-1 bg-gray-100 dark:bg-black/50 rounded-lg border border-gray-200 dark:border-white/10"
                     >
                         <button
-                            class="flex-1 py-1.5 text-xs rounded-md bg-white dark:bg-white/10 text-gray-900 dark:text-white font-medium shadow-sm transition-all"
+                            class="flex-1 py-1.5 text-xs rounded-md bg-white dark:bg-white/10 text-gray-900 dark:text-white font-medium shadow-sm transition-all active-shape"
                             data-shape="circle">Circle</button
                         >
                         <button
@@ -175,29 +175,41 @@ import Layout from "../../layouts/Layout.astro";
                 </div>
             </div>
 
-            <button
-                id="download-btn"
-                class="w-full py-3 bg-black dark:bg-white text-white dark:text-black font-semibold rounded-xl hover:bg-gray-800 dark:hover:bg-purple-100 transition-colors flex items-center justify-center gap-2 mt-4 disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="18"
-                    height="18"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    ><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"
-                    ></path><polyline points="7 10 12 15 17 10"></polyline><line
-                        x1="12"
-                        y1="15"
-                        x2="12"
-                        y2="3"></line></svg
+            <div class="grid grid-cols-2 gap-2 mt-4">
+                <button
+                    id="download-btn-svg"
+                    class="col-span-2 w-full py-3 bg-black dark:bg-white text-white dark:text-black font-semibold rounded-xl hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                Download SVG
-            </button>
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="18"
+                        height="18"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        ><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"
+                        ></path><polyline points="7 10 12 15 17 10"
+                        ></polyline><line x1="12" y1="15" x2="12" y2="3"
+                        ></line></svg
+                    >
+                    Download SVG
+                </button>
+                <button
+                    id="download-btn-png"
+                    class="w-full py-2 bg-gray-100 dark:bg-white/10 text-gray-900 dark:text-white font-medium rounded-lg hover:bg-gray-200 dark:hover:bg-white/20 transition-colors flex items-center justify-center gap-2 text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                    PNG
+                </button>
+                <button
+                    id="download-btn-jpg"
+                    class="w-full py-2 bg-gray-100 dark:bg-white/10 text-gray-900 dark:text-white font-medium rounded-lg hover:bg-gray-200 dark:hover:bg-white/20 transition-colors flex items-center justify-center gap-2 text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                    JPG
+                </button>
+            </div>
         </div>
 
         <!-- Preview Area -->
@@ -242,12 +254,14 @@ import Layout from "../../layouts/Layout.astro";
 </Layout>
 
 <style>
+    /* Dark mode checkerboard - significantly darkened for better visibility */
     :global(.dark) .checkerboard-bg {
+        background-color: #050505;
         background-image:
-            linear-gradient(45deg, #1a1a1a 25%, transparent 25%),
-            linear-gradient(-45deg, #1a1a1a 25%, transparent 25%),
-            linear-gradient(45deg, transparent 75%, #1a1a1a 75%),
-            linear-gradient(-45deg, transparent 75%, #1a1a1a 75%);
+            linear-gradient(45deg, #111 25%, transparent 25%),
+            linear-gradient(-45deg, #111 25%, transparent 25%),
+            linear-gradient(45deg, transparent 75%, #111 75%),
+            linear-gradient(-45deg, transparent 75%, #111 75%);
         background-size: 20px 20px;
         background-position:
             0 0,
@@ -274,7 +288,7 @@ import Layout from "../../layouts/Layout.astro";
 
 <script>
     let currentImage = null;
-    const canvas = document.createElement("canvas"); // Off-screen canvas
+    const canvas = document.createElement("canvas"); // Off-screen canvas for processing
     const ctx = canvas.getContext("2d");
 
     // Elements
@@ -283,7 +297,9 @@ import Layout from "../../layouts/Layout.astro";
         "image-upload",
     ) as HTMLInputElement;
     const previewContainer = document.getElementById("preview-container");
-    const downloadBtn = document.getElementById("download-btn");
+    const downloadBtnSVG = document.getElementById("download-btn-svg");
+    const downloadBtnPNG = document.getElementById("download-btn-png");
+    const downloadBtnJPG = document.getElementById("download-btn-jpg");
 
     // Inputs
     const dotSizeInput = document.getElementById(
@@ -348,34 +364,30 @@ import Layout from "../../layouts/Layout.astro";
 
         shapeButtons.forEach((btn) => {
             btn.addEventListener("click", () => {
-                settings.shape = (btn as HTMLElement).dataset.shape || "circle";
+                const shape = (btn as HTMLElement).dataset.shape || "circle";
+                settings.shape = shape;
+
+                // Reset all buttons
                 shapeButtons.forEach((b) => {
                     b.classList.remove(
-                        "bg-white/10",
                         "bg-white",
-                        "text-white",
+                        "dark:bg-white/10",
                         "text-gray-900",
+                        "dark:text-white",
                         "shadow-sm",
+                        "active-shape",
                     );
                     b.classList.add("text-gray-500", "dark:text-white/50");
-                    // Re-add hover
                 });
-                // Check theme for active state style
-                const isDark =
-                    document.documentElement.classList.contains("dark");
 
-                // Simplify logic: just use explicit classes via JS or better, Toggle class
-                // But our HTML structure relies on hard replacement in the loop above which is messy with dark mode classes.
-                // Let's just fix visual by re-applying base classes + active
-
-                // Better approach: toggle 'active' class and styling in CSS?
-                // For now, let's just cheat and apply hard classes.
+                // Activate clicked
                 btn.classList.add(
                     "bg-white",
                     "dark:bg-white/10",
                     "text-gray-900",
                     "dark:text-white",
                     "shadow-sm",
+                    "active-shape",
                 );
                 btn.classList.remove("text-gray-500", "dark:text-white/50");
 
@@ -392,7 +404,9 @@ import Layout from "../../layouts/Layout.astro";
             generateSVG();
         });
 
-        downloadBtn?.addEventListener("click", downloadSVG);
+        downloadBtnSVG?.addEventListener("click", downloadSVG);
+        downloadBtnPNG?.addEventListener("click", () => downloadRaster("png"));
+        downloadBtnJPG?.addEventListener("click", () => downloadRaster("jpeg"));
     }
 
     function handleFileSelect(e: Event) {
@@ -505,6 +519,46 @@ import Layout from "../../layouts/Layout.astro";
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
+    }
+
+    function downloadRaster(format: "png" | "jpeg") {
+        if (!previewContainer || !previewContainer.querySelector("svg")) return;
+
+        const svgString = new XMLSerializer().serializeToString(
+            previewContainer.querySelector("svg")!,
+        );
+        const canvas = document.createElement("canvas");
+        const ctx = canvas.getContext("2d");
+
+        const svgSize = previewContainer.querySelector("svg")!.viewBox.baseVal;
+        canvas.width = svgSize.width;
+        canvas.height = svgSize.height;
+
+        const img = new Image();
+        const svgBlob = new Blob([svgString], {
+            type: "image/svg+xml;charset=utf-8",
+        });
+        const url = URL.createObjectURL(svgBlob);
+
+        img.onload = function () {
+            if (ctx) {
+                // For JPEG, fill background with white (transparent becomes black in JPEG)
+                if (format === "jpeg") {
+                    ctx.fillStyle = "#ffffff";
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                }
+                ctx.drawImage(img, 0, 0);
+                const dataUrl = canvas.toDataURL(`image/${format}`);
+                const link = document.createElement("a");
+                link.href = dataUrl;
+                link.download = `jex-dot-art-${Date.now()}.${format === "jpeg" ? "jpg" : "png"}`;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                URL.revokeObjectURL(url);
+            }
+        };
+        img.src = url;
     }
 
     init();
