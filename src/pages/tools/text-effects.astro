@@ -1,0 +1,1011 @@
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout
+    title="Text Effect Generator | Jex"
+    description="Create stunning text effects with CSS or Tailwind CSS. Choose from Neon, Glitch, 3D, Gradient, and more. Customize every detail and copy the code in one click."
+>
+    <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8 pb-20">
+        <!-- Controls Sidebar -->
+        <div
+            class="bg-white dark:bg-[#111] border border-black/5 dark:border-white/5 rounded-2xl p-6 h-fit lg:sticky lg:top-24 space-y-6 shadow-sm dark:shadow-none"
+        >
+            <div class="space-y-1">
+                <h2
+                    class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-gray-900 to-gray-500 dark:from-white dark:to-white/60"
+                >
+                    Text Settings
+                </h2>
+                <p class="text-xs text-gray-500 dark:text-white/40">
+                    Customize your text effect
+                </p>
+            </div>
+
+            <div class="space-y-4">
+                <!-- Text Input -->
+                <div>
+                    <label
+                        class="block text-xs font-medium text-gray-500 dark:text-white/60 mb-1"
+                        >Content</label
+                    >
+                    <input
+                        type="text"
+                        id="text-content"
+                        value="TEXT EFFECT"
+                        class="w-full bg-gray-100 dark:bg-black/50 border border-gray-200 dark:border-white/10 rounded-lg px-3 py-2 text-sm text-gray-900 dark:text-white focus:border-purple-500/50 outline-none transition-colors"
+                    />
+                </div>
+
+                <!-- Font Size -->
+                <div>
+                    <label
+                        class="block text-xs font-medium text-gray-500 dark:text-white/60 mb-1"
+                        >Font Size</label
+                    >
+                    <input
+                        type="range"
+                        id="font-size"
+                        value="80"
+                        min="20"
+                        max="200"
+                        class="w-full h-2 bg-gray-200 dark:bg-white/10 rounded-lg appearance-none cursor-pointer accent-purple-500"
+                    />
+                </div>
+
+                <!-- Colors -->
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label
+                            class="block text-xs font-medium text-gray-500 dark:text-white/60 mb-1"
+                            >Primary Color</label
+                        >
+                        <input
+                            type="color"
+                            id="primary-color"
+                            value="#a855f7"
+                            class="w-full h-10 rounded cursor-pointer border-0 bg-transparent p-0"
+                        />
+                    </div>
+                    <div>
+                        <label
+                            class="block text-xs font-medium text-gray-500 dark:text-white/60 mb-1"
+                            >Secondary Color</label
+                        >
+                        <input
+                            type="color"
+                            id="secondary-color"
+                            value="#3b82f6"
+                            class="w-full h-10 rounded cursor-pointer border-0 bg-transparent p-0"
+                        />
+                    </div>
+                </div>
+
+                <!-- Effect Selection -->
+                <div>
+                    <label
+                        class="block text-xs font-medium text-gray-500 dark:text-white/60 mb-2"
+                        >Effect Type</label
+                    >
+                    <div class="grid grid-cols-3 gap-2">
+                        <button
+                            class="effect-btn py-2 text-xs rounded-lg border border-gray-200 dark:border-white/10 transition-all font-medium active-effect"
+                            data-effect="neon">Neon</button
+                        >
+                        <button
+                            class="effect-btn py-2 text-xs rounded-lg border border-gray-200 dark:border-white/10 transition-all font-medium text-gray-500 dark:text-white/50 hover:text-gray-900 dark:hover:text-white"
+                            data-effect="glitch">Glitch</button
+                        >
+                        <button
+                            class="effect-btn py-2 text-xs rounded-lg border border-gray-200 dark:border-white/10 transition-all font-medium text-gray-500 dark:text-white/50 hover:text-gray-900 dark:hover:text-white"
+                            data-effect="three-d">3D</button
+                        >
+                        <button
+                            class="effect-btn py-2 text-xs rounded-lg border border-gray-200 dark:border-white/10 transition-all font-medium text-gray-500 dark:text-white/50 hover:text-gray-900 dark:hover:text-white"
+                            data-effect="gradient">Gradient</button
+                        >
+                        <button
+                            class="effect-btn py-2 text-xs rounded-lg border border-gray-200 dark:border-white/10 transition-all font-medium text-gray-500 dark:text-white/50 hover:text-gray-900 dark:hover:text-white"
+                            data-effect="shimmer">Shimmer</button
+                        >
+                        <button
+                            class="effect-btn py-2 text-xs rounded-lg border border-gray-200 dark:border-white/10 transition-all font-medium text-gray-500 dark:text-white/50 hover:text-gray-900 dark:hover:text-white"
+                            data-effect="glass">Glass</button
+                        >
+                    </div>
+                </div>
+
+                <hr class="border-black/5 dark:border-white/5 my-4" />
+
+                <!-- Presets Section -->
+                <div>
+                    <label
+                        class="block text-xs font-medium text-gray-500 dark:text-white/60 mb-2"
+                        >Popular Presets</label
+                    >
+                    <div id="preset-list" class="grid grid-cols-2 gap-2">
+                        <!-- Presets injected here -->
+                    </div>
+                </div>
+
+                <hr class="border-black/5 dark:border-white/5 my-4" />
+
+                <!-- Dynamic Controls Section -->
+                <div id="dynamic-controls" class="space-y-4">
+                    <!-- Neon Controls -->
+                    <div id="neon-controls" class="effect-controls space-y-4">
+                        <div>
+                            <label
+                                class="block text-xs font-medium text-gray-500 dark:text-white/60 mb-1"
+                                >Blur Radius</label
+                            >
+                            <input
+                                type="range"
+                                id="neon-blur"
+                                value="10"
+                                min="0"
+                                max="50"
+                                class="w-full h-2 bg-gray-200 dark:bg-white/10 rounded-lg appearance-none cursor-pointer accent-purple-500"
+                            />
+                        </div>
+                        <div>
+                            <label
+                                class="block text-xs font-medium text-gray-500 dark:text-white/60 mb-1"
+                                >Glow Intensity</label
+                            >
+                            <input
+                                type="range"
+                                id="neon-intensity"
+                                value="5"
+                                min="1"
+                                max="10"
+                                class="w-full h-2 bg-gray-200 dark:bg-white/10 rounded-lg appearance-none cursor-pointer accent-purple-500"
+                            />
+                        </div>
+                    </div>
+
+                    <!-- Glitch Controls -->
+                    <div
+                        id="glitch-controls"
+                        class="effect-controls space-y-4 hidden"
+                    >
+                        <div>
+                            <label
+                                class="block text-xs font-medium text-gray-500 dark:text-white/60 mb-1"
+                                >Animation Speed</label
+                            >
+                            <input
+                                type="range"
+                                id="glitch-speed"
+                                value="1"
+                                min="0.1"
+                                max="5"
+                                step="0.1"
+                                class="w-full h-2 bg-gray-200 dark:bg-white/10 rounded-lg appearance-none cursor-pointer accent-purple-500"
+                            />
+                        </div>
+                        <div>
+                            <label
+                                class="block text-xs font-medium text-gray-500 dark:text-white/60 mb-1"
+                                >Slice Height</label
+                            >
+                            <input
+                                type="range"
+                                id="glitch-slice"
+                                value="2"
+                                min="1"
+                                max="10"
+                                class="w-full h-2 bg-gray-200 dark:bg-white/10 rounded-lg appearance-none cursor-pointer accent-purple-500"
+                            />
+                        </div>
+                    </div>
+
+                    <!-- 3D Controls -->
+                    <div
+                        id="three-d-controls"
+                        class="effect-controls space-y-4 hidden"
+                    >
+                        <div>
+                            <label
+                                class="block text-xs font-medium text-gray-500 dark:text-white/60 mb-1"
+                                >Depth</label
+                            >
+                            <input
+                                type="range"
+                                id="three-d-depth"
+                                value="5"
+                                min="1"
+                                max="20"
+                                class="w-full h-2 bg-gray-200 dark:bg-white/10 rounded-lg appearance-none cursor-pointer accent-purple-500"
+                            />
+                        </div>
+                        <div>
+                            <label
+                                class="block text-xs font-medium text-gray-500 dark:text-white/60 mb-1"
+                                >Shadow Angle</label
+                            >
+                            <input
+                                type="range"
+                                id="three-d-angle"
+                                value="45"
+                                min="0"
+                                max="360"
+                                class="w-full h-2 bg-gray-200 dark:bg-white/10 rounded-lg appearance-none cursor-pointer accent-purple-500"
+                            />
+                        </div>
+                    </div>
+
+                    <!-- Gradient Controls -->
+                    <div
+                        id="gradient-controls"
+                        class="effect-controls space-y-4 hidden"
+                    >
+                        <div>
+                            <label
+                                class="block text-xs font-medium text-gray-500 dark:text-white/60 mb-1"
+                                >Angle</label
+                            >
+                            <input
+                                type="range"
+                                id="gradient-angle"
+                                value="90"
+                                min="0"
+                                max="360"
+                                class="w-full h-2 bg-gray-200 dark:bg-white/10 rounded-lg appearance-none cursor-pointer accent-purple-500"
+                            />
+                        </div>
+                        <div>
+                            <label
+                                class="block text-xs font-medium text-gray-500 dark:text-white/60 mb-1"
+                                >Spread</label
+                            >
+                            <input
+                                type="range"
+                                id="gradient-spread"
+                                value="50"
+                                min="0"
+                                max="100"
+                                class="w-full h-2 bg-gray-200 dark:bg-white/10 rounded-lg appearance-none cursor-pointer accent-purple-500"
+                            />
+                        </div>
+                    </div>
+
+                    <!-- Shimmer Controls -->
+                    <div
+                        id="shimmer-controls"
+                        class="effect-controls space-y-4 hidden"
+                    >
+                        <div>
+                            <label
+                                class="block text-xs font-medium text-gray-500 dark:text-white/60 mb-1"
+                                >Duration (s)</label
+                            >
+                            <input
+                                type="range"
+                                id="shimmer-speed"
+                                value="2"
+                                min="0.5"
+                                max="5"
+                                step="0.1"
+                                class="w-full h-2 bg-gray-200 dark:bg-white/10 rounded-lg appearance-none cursor-pointer accent-purple-500"
+                            />
+                        </div>
+                        <div>
+                            <label
+                                class="block text-xs font-medium text-gray-500 dark:text-white/60 mb-1"
+                                >Blade Width</label
+                            >
+                            <input
+                                type="range"
+                                id="shimmer-width"
+                                value="20"
+                                min="5"
+                                max="50"
+                                class="w-full h-2 bg-gray-200 dark:bg-white/10 rounded-lg appearance-none cursor-pointer accent-purple-500"
+                            />
+                        </div>
+                    </div>
+
+                    <!-- Glass Controls -->
+                    <div
+                        id="glass-controls"
+                        class="effect-controls space-y-4 hidden"
+                    >
+                        <div>
+                            <label
+                                class="block text-xs font-medium text-gray-500 dark:text-white/60 mb-1"
+                                >Blur</label
+                            >
+                            <input
+                                type="range"
+                                id="glass-blur"
+                                value="4"
+                                min="0"
+                                max="20"
+                                class="w-full h-2 bg-gray-200 dark:bg-white/10 rounded-lg appearance-none cursor-pointer accent-purple-500"
+                            />
+                        </div>
+                        <div>
+                            <label
+                                class="block text-xs font-medium text-gray-500 dark:text-white/60 mb-1"
+                                >Stroke Width</label
+                            >
+                            <input
+                                type="range"
+                                id="glass-stroke"
+                                value="1"
+                                min="0"
+                                max="5"
+                                class="w-full h-2 bg-gray-200 dark:bg-white/10 rounded-lg appearance-none cursor-pointer accent-purple-500"
+                            />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="space-y-2 pt-4">
+                <button
+                    id="copy-code-btn"
+                    class="w-full py-3 bg-black dark:bg-white text-white dark:text-black font-semibold rounded-xl hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors flex items-center justify-center gap-2"
+                >
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="18"
+                        height="18"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        ><rect x="9" y="9" width="13" height="13" rx="2" ry="2"
+                        ></rect><path
+                            d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+                        ></path></svg
+                    >
+                    Copy Code
+                </button>
+            </div>
+        </div>
+
+        <!-- Preview Area -->
+        <div class="lg:col-span-2 min-h-[500px] flex flex-col">
+            <div
+                class="flex-1 bg-white dark:bg-[#050505] border border-black/5 dark:border-white/5 rounded-2xl flex items-center justify-center p-12 overflow-hidden relative checkerboard-bg"
+            >
+                <div
+                    id="text-preview"
+                    class="text-center font-bold tracking-tighter leading-none break-all relative"
+                >
+                    TEXT EFFECT
+                </div>
+            </div>
+
+            <!-- Code View with Toggle -->
+            <div
+                class="mt-4 bg-black/95 dark:bg-black rounded-xl border border-white/5 overflow-hidden"
+            >
+                <div
+                    class="flex items-center justify-between px-4 py-2 border-b border-white/5 bg-white/5"
+                >
+                    <div class="flex gap-4">
+                        <button
+                            id="css-mode-btn"
+                            class="text-xs font-bold transition-colors text-white border-b-2 border-purple-500 pb-1"
+                            >CSS</button
+                        >
+                        <button
+                            id="tw-mode-btn"
+                            class="text-xs font-bold transition-colors text-white/40 hover:text-white pb-1"
+                            >Tailwind CSS</button
+                        >
+                    </div>
+                    <div class="text-[10px] text-white/30 font-mono">
+                        CODE OUTPUT
+                    </div>
+                </div>
+                <div class="p-4 max-h-[300px] overflow-y-auto">
+                    <pre
+                        class="text-[10px] sm:text-xs text-purple-300 font-mono leading-relaxed"
+                        id="css-output">
+                    </pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</Layout>
+
+<style>
+    :global(.dark) .checkerboard-bg {
+        background-color: #050505;
+        background-image:
+            linear-gradient(45deg, #111 25%, transparent 25%),
+            linear-gradient(-45deg, #111 25%, transparent 25%),
+            linear-gradient(45deg, transparent 75%, #111 75%),
+            linear-gradient(-45deg, transparent 75%, #111 75%);
+        background-size: 20px 20px;
+        background-position:
+            0 0,
+            0 10px,
+            10px -10px,
+            -10px 0px;
+    }
+
+    .checkerboard-bg {
+        background-color: #f9fafb;
+        background-image:
+            linear-gradient(45deg, #e5e7eb 25%, transparent 25%),
+            linear-gradient(-45deg, #e5e7eb 25%, transparent 25%),
+            linear-gradient(45deg, transparent 75%, #e5e7eb 75%),
+            linear-gradient(-45deg, transparent 75%, #e5e7eb 75%);
+        background-size: 20px 20px;
+        background-position:
+            0 0,
+            0 10px,
+            10px -10px,
+            -10px 0px;
+    }
+
+    .active-effect {
+        background-color: black;
+        color: white;
+        border-color: black;
+    }
+    :global(.dark) .active-effect {
+        background-color: white;
+        color: black;
+        border-color: white;
+    }
+
+    #text-preview {
+        transition:
+            font-size 0.2s ease,
+            color 0.2s ease;
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    .preset-btn {
+        padding: 0.375rem 0.75rem;
+        font-size: 10px;
+        font-weight: 500;
+        border-radius: 0.375rem;
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        transition: all 0.2s;
+        color: rgba(0, 0, 0, 0.6);
+    }
+    :global(.dark) .preset-btn {
+        border-color: rgba(255, 255, 255, 0.1);
+        color: rgba(255, 255, 255, 0.6);
+    }
+    .preset-btn:hover {
+        background-color: rgba(0, 0, 0, 0.05);
+    }
+    :global(.dark) .preset-btn:hover {
+        background-color: rgba(255, 255, 255, 0.05);
+    }
+</style>
+
+<script>
+    // State
+    let state = {
+        effect: "neon",
+        content: "TEXT EFFECT",
+        fontSize: 80,
+        primary: "#a855f7",
+        secondary: "#3b82f6",
+        outputFormat: "css", // 'css' or 'tw'
+        params: {
+            neonBlur: 10,
+            neonIntensity: 5,
+            glitchSpeed: 1,
+            glitchSlice: 2,
+            threeDDepth: 5,
+            threeDAngle: 45,
+            gradientAngle: 90,
+            gradientSpread: 50,
+            shimmerSpeed: 2,
+            shimmerWidth: 20,
+            glassBlur: 4,
+            glassStroke: 1,
+        },
+    };
+
+    const presets = {
+        neon: {
+            Cyberpunk: {
+                primary: "#ff00c1",
+                secondary: "#00fff9",
+                params: { neonBlur: 15, neonIntensity: 6 },
+            },
+            "Golden Hour": {
+                primary: "#f59e0b",
+                secondary: "#ef4444",
+                params: { neonBlur: 8, neonIntensity: 4 },
+            },
+            "Deep Sea": {
+                primary: "#06b6d4",
+                secondary: "#3b82f6",
+                params: { neonBlur: 20, neonIntensity: 8 },
+            },
+            Moonlight: {
+                primary: "#f8fafc",
+                secondary: "#94a3b8",
+                params: { neonBlur: 12, neonIntensity: 3 },
+            },
+        },
+        glitch: {
+            Heavy: {
+                primary: "#ff0000",
+                secondary: "#0000ff",
+                params: { glitchSpeed: 0.1, glitchSlice: 8 },
+            },
+            Ghostly: {
+                primary: "#ffffff",
+                secondary: "#cccccc",
+                params: { glitchSpeed: 3, glitchSlice: 1 },
+            },
+            Digital: {
+                primary: "#00ff00",
+                secondary: "#000000",
+                params: { glitchSpeed: 0.8, glitchSlice: 3 },
+            },
+            "CRT Wave": {
+                primary: "#ff00ff",
+                secondary: "#00ffff",
+                params: { glitchSpeed: 2, glitchSlice: 5 },
+            },
+        },
+        threeD: {
+            Isometric: {
+                primary: "#a855f7",
+                secondary: "#ffffff",
+                params: { threeDDepth: 15, threeDAngle: 45 },
+            },
+            "Retro 80s": {
+                primary: "#ff00c1",
+                secondary: "#00fff9",
+                params: { threeDDepth: 8, threeDAngle: 120 },
+            },
+            "Flat Lift": {
+                primary: "#3b82f6",
+                secondary: "#000000",
+                params: { threeDDepth: 3, threeDAngle: 90 },
+            },
+            "Deep Block": {
+                primary: "#ef4444",
+                secondary: "#000000",
+                params: { threeDDepth: 20, threeDAngle: 200 },
+            },
+        },
+        gradient: {
+            Sunset: {
+                primary: "#f59e0b",
+                secondary: "#ef4444",
+                params: { gradientAngle: 45, gradientSpread: 30 },
+            },
+            Oceanic: {
+                primary: "#0ea5e9",
+                secondary: "#2563eb",
+                params: { gradientAngle: 180, gradientSpread: 60 },
+            },
+            Aurora: {
+                primary: "#22c55e",
+                secondary: "#a855f7",
+                params: { gradientAngle: 90, gradientSpread: 50 },
+            },
+            Midnight: {
+                primary: "#1e293b",
+                secondary: "#0f172a",
+                params: { gradientAngle: 135, gradientSpread: 20 },
+            },
+        },
+        shimmer: {
+            "Gold Rush": {
+                primary: "#fbbf24",
+                secondary: "#ffffff",
+                params: { shimmerSpeed: 1, shimmerWidth: 40 },
+            },
+            "Quick Silver": {
+                primary: "#94a3b8",
+                secondary: "#ffffff",
+                params: { shimmerSpeed: 0.5, shimmerWidth: 15 },
+            },
+            Emerald: {
+                primary: "#10b981",
+                secondary: "#34d399",
+                params: { shimmerSpeed: 3, shimmerWidth: 25 },
+            },
+            "Slow Fade": {
+                primary: "#a855f7",
+                secondary: "#3b82f6",
+                params: { shimmerSpeed: 5, shimmerWidth: 50 },
+            },
+        },
+        glass: {
+            Frosted: {
+                primary: "#ffffff",
+                secondary: "#ffffff",
+                params: { glassBlur: 8, glassStroke: 2 },
+            },
+            Crystal: {
+                primary: "#ffffff",
+                secondary: "#ffffff",
+                params: { glassBlur: 2, glassStroke: 1 },
+            },
+            Smoky: {
+                primary: "#334155",
+                secondary: "#000000",
+                params: { glassBlur: 12, glassStroke: 1 },
+            },
+            Vibrant: {
+                primary: "#a855f7",
+                secondary: "#3b82f6",
+                params: { glassBlur: 5, glassStroke: 3 },
+            },
+        },
+    };
+
+    // Elements
+    const preview = document.getElementById("text-preview");
+    const cssDisplay = document.getElementById("css-output");
+    const presetList = document.getElementById("preset-list");
+
+    // Toggle Buttons
+    const cssModeBtn = document.getElementById("css-mode-btn");
+    const twModeBtn = document.getElementById("tw-mode-btn");
+
+    const inputs = {
+        content: document.getElementById("text-content") as HTMLInputElement,
+        fontSize: document.getElementById("font-size") as HTMLInputElement,
+        primary: document.getElementById("primary-color") as HTMLInputElement,
+        secondary: document.getElementById(
+            "secondary-color",
+        ) as HTMLInputElement,
+        neonBlur: document.getElementById("neon-blur") as HTMLInputElement,
+        neonIntensity: document.getElementById(
+            "neon-intensity",
+        ) as HTMLInputElement,
+        glitchSpeed: document.getElementById(
+            "glitch-speed",
+        ) as HTMLInputElement,
+        glitchSlice: document.getElementById(
+            "glitch-slice",
+        ) as HTMLInputElement,
+        threeDDepth: document.getElementById(
+            "three-d-depth",
+        ) as HTMLInputElement,
+        threeDAngle: document.getElementById(
+            "three-d-angle",
+        ) as HTMLInputElement,
+        gradientAngle: document.getElementById(
+            "gradient-angle",
+        ) as HTMLInputElement,
+        gradientSpread: document.getElementById(
+            "gradient-spread",
+        ) as HTMLInputElement,
+        shimmerSpeed: document.getElementById(
+            "shimmer-speed",
+        ) as HTMLInputElement,
+        shimmerWidth: document.getElementById(
+            "shimmer-width",
+        ) as HTMLInputElement,
+        glassBlur: document.getElementById("glass-blur") as HTMLInputElement,
+        glassStroke: document.getElementById(
+            "glass-stroke",
+        ) as HTMLInputElement,
+    };
+
+    const effectBtns = document.querySelectorAll(".effect-btn");
+    const controls = document.querySelectorAll(".effect-controls");
+
+    function updateState() {
+        state.content = inputs.content.value;
+        state.fontSize = parseInt(inputs.fontSize.value);
+        state.primary = inputs.primary.value;
+        state.secondary = inputs.secondary.value;
+
+        state.params.neonBlur = parseInt(inputs.neonBlur.value);
+        state.params.neonIntensity = parseInt(inputs.neonIntensity.value);
+        state.params.glitchSpeed = parseFloat(inputs.glitchSpeed.value);
+        state.params.glitchSlice = parseInt(inputs.glitchSlice.value);
+        state.params.threeDDepth = parseInt(inputs.threeDDepth.value);
+        state.params.threeDAngle = parseInt(inputs.threeDAngle.value);
+        state.params.gradientAngle = parseInt(inputs.gradientAngle.value);
+        state.params.gradientSpread = parseInt(inputs.gradientSpread.value);
+        state.params.shimmerSpeed = parseFloat(inputs.shimmerSpeed.value);
+        state.params.shimmerWidth = parseInt(inputs.shimmerWidth.value);
+        state.params.glassBlur = parseInt(inputs.glassBlur.value);
+        state.params.glassStroke = parseInt(inputs.glassStroke.value);
+
+        render();
+    }
+
+    function applyPreset(presetName: string) {
+        const effectPresets = presets[state.effect as keyof typeof presets];
+        const preset = effectPresets[presetName as keyof typeof effectPresets];
+        if (!preset) return;
+
+        // Update state
+        state.primary = preset.primary;
+        state.secondary = preset.secondary;
+        Object.assign(state.params, preset.params);
+
+        // Sync HTML inputs
+        inputs.primary.value = state.primary;
+        inputs.secondary.value = state.secondary;
+
+        Object.entries(preset.params).forEach(([key, value]) => {
+            const input = inputs[key as keyof typeof inputs];
+            if (input) input.value = value.toString();
+        });
+
+        render();
+    }
+
+    function updatePresetsUI() {
+        if (!presetList) return;
+        presetList.innerHTML = "";
+
+        const currentEffectPresets =
+            presets[state.effect as keyof typeof presets];
+        if (!currentEffectPresets) return;
+
+        Object.keys(currentEffectPresets).forEach((name) => {
+            const btn = document.createElement("button");
+            btn.className = "preset-btn";
+            btn.innerText = name;
+            btn.onclick = () => applyPreset(name);
+            presetList.appendChild(btn);
+        });
+    }
+
+    function render() {
+        if (!preview || !cssDisplay) return;
+
+        preview.innerText = state.content;
+        preview.style.fontSize = `${state.fontSize}px`;
+
+        // Reset preview
+        preview.style.color = "";
+        preview.style.textShadow = "";
+        preview.style.background = "";
+        preview.style.webkitBackgroundClip = "";
+        preview.style.webkitTextFillColor = "";
+        preview.style.animation = "";
+        preview.style.filter = "";
+        preview.style.webkitTextStroke = "";
+        preview.style.backdropFilter = "";
+        preview.classList.remove("glitch-active");
+
+        const oldStyle = document.getElementById("dynamic-effect-style");
+        if (oldStyle) oldStyle.remove();
+
+        let css = "";
+        let tw = "";
+        let extraStyles = "";
+
+        switch (state.effect) {
+            case "neon":
+                preview.style.color = "#fff";
+                let neonShadows = [];
+                for (let i = 1; i <= state.params.neonIntensity; i++) {
+                    neonShadows.push(
+                        `0 0 ${i * state.params.neonBlur}px ${state.primary}`,
+                    );
+                }
+                const shadowVal = neonShadows.join(", ");
+                preview.style.textShadow = shadowVal;
+                css = `.neon-text {\n  color: #fff;\n  text-shadow: ${shadowVal};\n  font-size: ${state.fontSize}px;\n}`;
+                tw = `text-white text-[${state.fontSize}px] [text-shadow:${shadowVal.replace(/ /g, "_")}]`;
+                break;
+
+            case "glitch":
+                preview.classList.add("glitch-active");
+                preview.style.color = "#fff";
+                preview.style.position = "relative";
+
+                const gSpeed = state.params.glitchSpeed;
+                const gSlice = state.params.glitchSlice;
+
+                extraStyles = `
+                    .glitch-active::before, .glitch-active::after {
+                        content: '${state.content}';
+                        position: absolute;
+                        top: 0; left: 0; width: 100%; height: 100%;
+                        background: transparent;
+                    }
+                    .glitch-active::before {
+                        left: ${gSlice}px;
+                        text-shadow: -2px 0 #ff00c1;
+                        clip: rect(44px, 450px, 56px, 0);
+                        animation: glitch-anim 5s infinite linear alternate-reverse;
+                    }
+                    .glitch-active::after {
+                        left: -${gSlice}px;
+                        text-shadow: -2px 0 #00fff9, 2px 2px #ff00c1;
+                        animation: glitch-anim2 ${gSpeed}s infinite linear alternate-reverse;
+                    }
+                `;
+                css = `.glitch-text {\n  position: relative;\n  color: #fff;\n  font-size: ${state.fontSize}px;\n  animation: glitch ${gSpeed}s linear infinite;\n}\n/* Note: Requires pseudo-elements and keyframes in CSS */`;
+                tw = `relative text-white text-[${state.fontSize}px] animate-[glitch_${gSpeed}s_linear_infinite] after:content-['${state.content}'] after:absolute after:top-0 after:left-0 ...`;
+                break;
+
+            case "threeD":
+                preview.style.color = state.primary;
+                let dShadows = [];
+                const angleRad = (state.params.threeDAngle * Math.PI) / 180;
+                for (let i = 1; i <= state.params.threeDDepth; i++) {
+                    const x = Math.cos(angleRad) * i;
+                    const y = Math.sin(angleRad) * i;
+                    dShadows.push(`${x.toFixed(1)}px ${y.toFixed(1)}px 0 #ccc`);
+                }
+                dShadows.push(`0 10px 10px rgba(0,0,0,0.2)`);
+                const dShadowVal = dShadows.join(", ");
+                preview.style.textShadow = dShadowVal;
+                css = `.three-d-text {\n  color: ${state.primary};\n  text-shadow: ${dShadowVal};\n  font-size: ${state.fontSize}px;\n}`;
+                tw = `text-[${state.primary}] text-[${state.fontSize}px] [text-shadow:${dShadowVal.replace(/ /g, "_")}]`;
+                break;
+
+            case "gradient":
+                preview.style.background = `linear-gradient(${state.params.gradientAngle}deg, ${state.primary} ${state.params.gradientSpread}%, ${state.secondary})`;
+                preview.style.webkitBackgroundClip = "text";
+                preview.style.webkitTextFillColor = "transparent";
+                css = `.gradient-text {\n  background: linear-gradient(${state.params.gradientAngle}deg, ${state.primary} ${state.params.gradientSpread}%, ${state.secondary});\n  -webkit-background-clip: text;\n  -webkit-text-fill-color: transparent;\n  font-size: ${state.fontSize}px;\n}`;
+                tw = `bg-clip-text text-transparent text-[${state.fontSize}px] bg-[linear-gradient(${state.params.gradientAngle}deg,_${state.primary}_${state.params.gradientSpread}%,_${state.secondary})]`;
+                break;
+
+            case "shimmer":
+                preview.style.background = `linear-gradient(to right, ${state.primary} 20%, ${state.secondary} 40%, ${state.secondary} 60%, ${state.primary} 80%)`;
+                preview.style.backgroundSize = `${state.params.shimmerWidth * 10}% auto`;
+                preview.style.webkitBackgroundClip = "text";
+                preview.style.webkitTextFillColor = "transparent";
+                preview.style.animation = `shimmer ${state.params.shimmerSpeed}s linear infinite`;
+                css = `.shimmer-text {\n  background: linear-gradient(to right, ${state.primary} 20%, ${state.secondary} 40%, ${state.secondary} 60%, ${state.primary} 80%);\n  background-size: ${state.params.shimmerWidth * 10}% auto;\n  -webkit-background-clip: text;\n  -webkit-text-fill-color: transparent;\n  animation: shimmer ${state.params.shimmerSpeed}s linear infinite;\n  font-size: ${state.fontSize}px;\n}`;
+                tw = `bg-clip-text text-transparent text-[${state.fontSize}px] bg-[linear-gradient(to_right,_${state.primary}_20%,_${state.secondary}_40%,_${state.secondary}_60%,_${state.primary}_80%)] bg-[length:${state.params.shimmerWidth * 10}%_auto] animate-[shimmer_${state.params.shimmerSpeed}s_linear_infinite]`;
+                break;
+
+            case "glass":
+                preview.style.color = "rgba(255, 255, 255, 0.1)";
+                preview.style.webkitTextStroke = `${state.params.glassStroke}px rgba(255, 255, 255, 0.5)`;
+                preview.style.backdropFilter = `blur(${state.params.glassBlur}px)`;
+                css = `.glass-text {\n  color: rgba(255, 255, 255, 0.1);\n  -webkit-text-stroke: ${state.params.glassStroke}px rgba(255, 255, 255, 0.5);\n  backdrop-filter: blur(${state.params.glassBlur}px);\n  font-size: ${state.fontSize}px;\n}`;
+                tw = `text-white/10 text-[${state.fontSize}px] backdrop-blur-[${state.params.glassBlur}px] [-webkit-text-stroke:${state.params.glassStroke}px_rgba(255,255,255,0.5)]`;
+                break;
+        }
+
+        if (extraStyles) {
+            const styleTag = document.createElement("style");
+            styleTag.id = "dynamic-effect-style";
+            styleTag.innerHTML = extraStyles;
+            document.head.appendChild(styleTag);
+        }
+
+        cssDisplay.innerText = state.outputFormat === "css" ? css : tw;
+    }
+
+    // Event Listeners
+    Object.values(inputs).forEach((input) => {
+        input.addEventListener("input", updateState);
+    });
+
+    effectBtns.forEach((btn) => {
+        btn.addEventListener("click", () => {
+            let effect = (btn as HTMLElement).dataset.effect || "neon";
+            if (effect === "three-d") effect = "threeD"; // normalize
+            state.effect = effect;
+
+            // Toggle Buttons
+            effectBtns.forEach((b) => {
+                b.classList.remove("active-effect");
+                b.classList.add("text-gray-500", "dark:text-white/50");
+            });
+            btn.classList.add("active-effect");
+            btn.classList.remove("text-gray-500", "dark:text-white/50");
+
+            // Toggle Groups
+            controls.forEach((group) => {
+                const groupId = group.id.replace("-controls", "");
+                const normalizedKey =
+                    groupId === "three-d" ? "threeD" : groupId;
+                if (normalizedKey === effect) group.classList.remove("hidden");
+                else group.classList.add("hidden");
+            });
+
+            updatePresetsUI();
+            render();
+        });
+    });
+
+    // Format Toggle
+    cssModeBtn?.addEventListener("click", () => {
+        state.outputFormat = "css";
+        cssModeBtn.classList.add("border-b-2", "border-purple-500", "pb-1");
+        cssModeBtn.classList.remove("text-white/40");
+        twModeBtn?.classList.remove("border-b-2", "border-purple-500", "pb-1");
+        twModeBtn?.classList.add("text-white/40");
+        render();
+    });
+
+    twModeBtn?.addEventListener("click", () => {
+        state.outputFormat = "tw";
+        twModeBtn.classList.add("border-b-2", "border-purple-500", "pb-1");
+        twModeBtn.classList.remove("text-white/40");
+        cssModeBtn?.classList.remove("border-b-2", "border-purple-500", "pb-1");
+        cssModeBtn?.classList.add("text-white/40");
+        render();
+    });
+
+    const copyBtn = document.getElementById("copy-code-btn");
+    copyBtn?.addEventListener("click", () => {
+        if (!cssDisplay) return;
+        navigator.clipboard.writeText(cssDisplay.innerText);
+        const originalText = copyBtn.innerHTML;
+        copyBtn.innerHTML = "✨ Copied!";
+        setTimeout(() => {
+            copyBtn.innerHTML = originalText;
+        }, 2000);
+    });
+
+    // Init
+    updatePresetsUI();
+    updateState();
+</script>
+
+<style is:global>
+    @keyframes shimmer {
+        to {
+            background-position: 200% center;
+        }
+    }
+    @keyframes glitch {
+        0% {
+            transform: translate(0);
+        }
+        20% {
+            transform: translate(-2px, 2px);
+        }
+        40% {
+            transform: translate(-2px, -2px);
+        }
+        60% {
+            transform: translate(2px, 2px);
+        }
+        80% {
+            transform: translate(2px, -2px);
+        }
+        100% {
+            transform: translate(0);
+        }
+    }
+    @keyframes glitch-anim {
+        0% {
+            clip: rect(31px, 9999px, 94px, 0);
+        }
+        20% {
+            clip: rect(62px, 9999px, 42px, 0);
+        }
+        40% {
+            clip: rect(16px, 9999px, 78px, 0);
+        }
+        60% {
+            clip: rect(43px, 9999px, 11px, 0);
+        }
+        80% {
+            clip: rect(79px, 9999px, 34px, 0);
+        }
+        100% {
+            clip: rect(4px, 9999px, 91px, 0);
+        }
+    }
+    @keyframes glitch-anim2 {
+        0% {
+            clip: rect(10px, 9999px, 20px, 0);
+        }
+        100% {
+            clip: rect(80px, 9999px, 95px, 0);
+        }
+    }
+</style>
