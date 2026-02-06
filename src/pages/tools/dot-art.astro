@@ -217,9 +217,118 @@ import Layout from "../../layouts/Layout.astro";
 
         <!-- Preview Area -->
         <div class="lg:col-span-2 min-h-[500px] flex flex-col">
+            <!-- Compare Toggle Button -->
+            <div class="flex items-center justify-end mb-4 gap-2">
+                <button
+                    id="compare-btn"
+                    class="flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg bg-gray-100 dark:bg-white/10 text-gray-700 dark:text-white/80 hover:bg-gray-200 dark:hover:bg-white/20 transition-all border border-black/5 dark:border-white/10 disabled:opacity-50 disabled:cursor-not-allowed"
+                    disabled
+                >
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        class="size-4"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M7.5 21 3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5"
+                        ></path>
+                    </svg>
+                    <span>Avant / Après</span>
+                </button>
+            </div>
+
             <div
                 class="flex-1 bg-white dark:bg-[#050505] border border-black/5 dark:border-white/5 rounded-2xl flex items-center justify-center p-8 overflow-hidden relative checkerboard-bg"
             >
+                <!-- Comparison Slider View (hidden by default) -->
+                <div id="comparison-view" class="absolute inset-0 hidden z-20">
+                    <div class="relative w-full h-full">
+                        <!-- Original Image -->
+                        <div
+                            class="absolute inset-0 flex items-center justify-center p-8"
+                        >
+                            <img
+                                id="original-img"
+                                class="max-w-full max-h-[70vh] object-contain"
+                                alt="Original"
+                            />
+                        </div>
+                        <!-- Dot Art (clipped) -->
+                        <div
+                            id="dotart-clip"
+                            class="absolute inset-0 flex items-center justify-center p-8 overflow-hidden"
+                            style="clip-path: inset(0 50% 0 0);"
+                        >
+                            <div
+                                id="dotart-preview"
+                                class="max-w-full max-h-[70vh]"
+                            >
+                            </div>
+                        </div>
+                        <!-- Slider Handle -->
+                        <div
+                            id="comparison-slider"
+                            class="absolute top-0 bottom-0 w-1 bg-white shadow-lg cursor-ew-resize z-30"
+                            style="left: 50%;"
+                        >
+                            <div
+                                class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center"
+                            >
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke-width="2"
+                                    stroke="#333"
+                                    class="size-5"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        d="M8.25 15 12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"
+                                    ></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <!-- Labels -->
+                        <div
+                            class="absolute top-4 left-4 px-3 py-1.5 bg-black/60 text-white text-xs font-medium rounded-full"
+                        >
+                            Original
+                        </div>
+                        <div
+                            class="absolute top-4 right-4 px-3 py-1.5 bg-black/60 text-white text-xs font-medium rounded-full"
+                        >
+                            Dot Art
+                        </div>
+                        <!-- Close Button -->
+                        <button
+                            id="close-compare-btn"
+                            class="absolute bottom-4 left-1/2 -translate-x-1/2 px-4 py-2 bg-black/80 hover:bg-black text-white text-sm font-medium rounded-lg transition-colors flex items-center gap-2"
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke-width="2"
+                                stroke="currentColor"
+                                class="size-4"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M6 18 18 6M6 6l12 12"></path>
+                            </svg>
+                            Fermer
+                        </button>
+                    </div>
+                </div>
+
                 <div
                     id="preview-container"
                     class="max-w-full max-h-[70vh] shadow-2xl dark:shadow-purple-900/10 shadow-black/10"
@@ -290,7 +399,8 @@ import Layout from "../../layouts/Layout.astro";
 </style>
 
 <script>
-    let currentImage = null;
+    let currentImage: HTMLImageElement | null = null;
+    let originalImageSrc: string = "";
     const canvas = document.createElement("canvas"); // Off-screen canvas for processing
     const ctx = canvas.getContext("2d");
 
@@ -303,6 +413,17 @@ import Layout from "../../layouts/Layout.astro";
     const downloadBtnSVG = document.getElementById("download-btn-svg");
     const downloadBtnPNG = document.getElementById("download-btn-png");
     const downloadBtnJPG = document.getElementById("download-btn-jpg");
+
+    // Comparison Elements
+    const compareBtn = document.getElementById("compare-btn");
+    const closeCompareBtn = document.getElementById("close-compare-btn");
+    const comparisonView = document.getElementById("comparison-view");
+    const originalImg = document.getElementById(
+        "original-img",
+    ) as HTMLImageElement;
+    const dotartClip = document.getElementById("dotart-clip");
+    const dotartPreview = document.getElementById("dotart-preview");
+    const comparisonSlider = document.getElementById("comparison-slider");
 
     // Inputs
     const dotSizeInput = document.getElementById(
@@ -410,6 +531,102 @@ import Layout from "../../layouts/Layout.astro";
         downloadBtnSVG?.addEventListener("click", downloadSVG);
         downloadBtnPNG?.addEventListener("click", () => downloadRaster("png"));
         downloadBtnJPG?.addEventListener("click", () => downloadRaster("jpeg"));
+
+        // Comparison event listeners
+        compareBtn?.addEventListener("click", openComparison);
+        closeCompareBtn?.addEventListener("click", closeComparison);
+
+        // Comparison slider drag
+        let isDragging = false;
+
+        comparisonSlider?.addEventListener("mousedown", (e) => {
+            isDragging = true;
+            e.preventDefault();
+        });
+
+        document.addEventListener("mousemove", (e) => {
+            if (
+                !isDragging ||
+                !comparisonView ||
+                !comparisonSlider ||
+                !dotartClip
+            )
+                return;
+
+            const rect = comparisonView.getBoundingClientRect();
+            let x = e.clientX - rect.left;
+            x = Math.max(0, Math.min(x, rect.width));
+            const percent = (x / rect.width) * 100;
+
+            comparisonSlider.style.left = `${percent}%`;
+            dotartClip.style.clipPath = `inset(0 ${100 - percent}% 0 0)`;
+        });
+
+        document.addEventListener("mouseup", () => {
+            isDragging = false;
+        });
+
+        // Touch support for mobile
+        comparisonSlider?.addEventListener("touchstart", (e) => {
+            isDragging = true;
+            e.preventDefault();
+        });
+
+        document.addEventListener("touchmove", (e) => {
+            if (
+                !isDragging ||
+                !comparisonView ||
+                !comparisonSlider ||
+                !dotartClip
+            )
+                return;
+
+            const touch = e.touches[0];
+            const rect = comparisonView.getBoundingClientRect();
+            let x = touch.clientX - rect.left;
+            x = Math.max(0, Math.min(x, rect.width));
+            const percent = (x / rect.width) * 100;
+
+            comparisonSlider.style.left = `${percent}%`;
+            dotartClip.style.clipPath = `inset(0 ${100 - percent}% 0 0)`;
+        });
+
+        document.addEventListener("touchend", () => {
+            isDragging = false;
+        });
+    }
+
+    function openComparison() {
+        if (
+            !comparisonView ||
+            !originalImg ||
+            !dotartPreview ||
+            !previewContainer
+        )
+            return;
+
+        // Set original image
+        originalImg.src = originalImageSrc;
+
+        // Clone the SVG for comparison
+        const svgElement = previewContainer.querySelector("svg");
+        if (svgElement) {
+            dotartPreview.innerHTML = svgElement.outerHTML;
+        }
+
+        // Reset slider position
+        if (comparisonSlider && dotartClip) {
+            comparisonSlider.style.left = "50%";
+            dotartClip.style.clipPath = "inset(0 50% 0 0)";
+        }
+
+        // Show comparison view
+        comparisonView.classList.remove("hidden");
+    }
+
+    function closeComparison() {
+        if (!comparisonView) return;
+        comparisonView.classList.add("hidden");
     }
 
     function handleFileSelect(e: Event) {
@@ -420,7 +637,13 @@ import Layout from "../../layouts/Layout.astro";
                 const img = new Image();
                 img.onload = () => {
                     currentImage = img;
+                    originalImageSrc = event.target?.result as string;
                     generateSVG();
+
+                    // Enable compare button
+                    if (compareBtn) {
+                        compareBtn.removeAttribute("disabled");
+                    }
                 };
                 img.src = event.target?.result as string;
             };

@@ -6,6 +6,7 @@ const animations = [
     name: 'Moving Gradient',
     id: 'gradient-move',
     class: 'anim-gradient',
+    type: 'gradient',
     css: `background: linear-gradient(270deg, #ff9a9e, #fad0c4, #fad0c4);
 background-size: 600% 600%;
 animation: gradientAnimation 6s ease infinite;
@@ -20,6 +21,7 @@ animation: gradientAnimation 6s ease infinite;
     name: 'Drifting Grid',
     id: 'grid-drift',
     class: 'anim-grid',
+    type: 'grid',
     css: `background-size: 40px 40px;
 background-image: linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
                   linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
@@ -34,6 +36,7 @@ animation: gridMove 20s linear infinite;
     name: 'Pulse Circle',
     id: 'pulse-circle',
     class: 'anim-pulse',
+    type: 'effect',
     css: `background-color: #000;
 background-image: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
 background-size: 100% 100%;
@@ -51,6 +54,7 @@ animation: pulse 4s ease-in-out infinite;
     name: 'Animated Mesh',
     id: 'anim-mesh',
     class: 'anim-mesh',
+    type: 'mesh',
     css: `background-color: #000;
 background-image: 
     radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%), 
@@ -69,6 +73,7 @@ animation: meshContent 10s ease infinite;
       name: 'Sunset Flow',
       id: 'mesh-sunset',
       class: 'anim-mesh-sunset',
+      type: 'mesh',
       css: `background-color: #220a0a;
 background-image: 
     radial-gradient(at 0% 100%, hsla(28,100%,74%,1) 0, transparent 50%), 
@@ -87,6 +92,7 @@ animation: meshContent 10s ease infinite;
       name: 'Ocean Tides',
       id: 'mesh-ocean',
       class: 'anim-mesh-ocean',
+      type: 'mesh',
       css: `background-color: #000022;
 background-image: 
     radial-gradient(at 0% 0%, hsla(200,100%,40%,1) 0, transparent 50%), 
@@ -99,6 +105,7 @@ animation: meshContent 12s ease infinite;`
       name: 'Aurora Borealis',
       id: 'mesh-aurora',
       class: 'anim-mesh-aurora',
+      type: 'mesh',
       css: `background-color: #001;
 background-image: 
     radial-gradient(at 10% 10%, hsla(150,100%,40%,1) 0, transparent 50%), 
@@ -111,6 +118,7 @@ animation: meshContent 15s ease infinite;`
       name: 'Neon City',
       id: 'mesh-neon',
       class: 'anim-mesh-neon',
+      type: 'mesh',
       css: `background-color: #1a0b2e;
 background-image: 
     radial-gradient(at 0% 100%, hsla(320,100%,50%,1) 0, transparent 50%), 
@@ -123,6 +131,7 @@ animation: meshContent 8s ease infinite;`
       name: 'Pastel Dream',
       id: 'mesh-pastel',
       class: 'anim-mesh-pastel',
+      type: 'mesh',
       css: `background-color: #fff0f5;
 background-image: 
     radial-gradient(at 0% 0%, hsla(340,100%,85%,1) 0, transparent 50%), 
@@ -135,6 +144,7 @@ animation: meshContent 12s ease infinite;`
       name: 'Deep Space',
       id: 'mesh-space',
       class: 'anim-mesh-space',
+      type: 'mesh',
       css: `background-color: #000;
 background-image: 
     radial-gradient(at 20% 20%, hsla(260,50%,20%,1) 0, transparent 50%), 
@@ -146,6 +156,7 @@ animation: meshContent 20s ease infinite;`
       name: 'Forest Mist',
       id: 'mesh-forest',
       class: 'anim-mesh-forest',
+      type: 'mesh',
       css: `background-color: #051a05;
 background-image: 
     radial-gradient(at 0% 100%, hsla(140,60%,30%,1) 0, transparent 50%), 
@@ -157,6 +168,7 @@ animation: meshContent 18s ease infinite;`
       name: 'Golden Luxe',
       id: 'mesh-gold',
       class: 'anim-mesh-gold',
+      type: 'mesh',
       css: `background-color: #2e2005;
 background-image: 
     radial-gradient(at 0% 0%, hsla(45,100%,50%,1) 0, transparent 50%), 
@@ -168,6 +180,7 @@ animation: meshContent 10s ease infinite;`
       name: 'Royal Velvet',
       id: 'mesh-royal',
       class: 'anim-mesh-royal',
+      type: 'mesh',
       css: `background-color: #1a001a;
 background-image: 
     radial-gradient(at 50% 0%, hsla(300,100%,20%,1) 0, transparent 50%), 
@@ -179,6 +192,7 @@ animation: meshContent 14s ease infinite;`
       name: 'Icy Glare',
       id: 'mesh-ice',
       class: 'anim-mesh-ice',
+      type: 'mesh',
       css: `background-color: #e0f0ff;
 background-image: 
     radial-gradient(at 0% 100%, hsla(200,100%,80%,1) 0, transparent 50%), 
@@ -190,6 +204,7 @@ animation: meshContent 15s ease infinite;`
     name: 'Ribbon Flow',
     id: 'anim-ribbon',
     class: 'anim-ribbon',
+    type: 'pattern',
     css: `background: repeating-linear-gradient(
     45deg,
     #606dbc,
@@ -209,6 +224,7 @@ animation: ribbonMove 20s linear infinite;
       name: 'Shooting Stars',
       id: 'shooting-stars',
       class: 'anim-shooting',
+      type: 'stars',
       css: `background-color: #0d0d1a;
 background-image: 
     conic-gradient(from 0deg at 50% 50%, rgba(255,255,255,0.05) 0deg, transparent 60deg, transparent 300deg, rgba(255,255,255,0.05) 360deg),
@@ -226,6 +242,7 @@ overflow: hidden;
       name: 'Scanning line',
       id: 'scan-line',
       class: 'anim-scan',
+      type: 'effect',
       css: `background: linear-gradient(to bottom, transparent 50%, rgba(32, 255, 77, 0.1) 51%, transparent 52%);
 background-size: 100% 200%;
 animation: scan 3s linear infinite;
@@ -239,6 +256,7 @@ animation: scan 3s linear infinite;
       name: 'Twinkling Stars',
       id: 'twinkle',
       class: 'anim-stars',
+      type: 'stars',
       css: `background-color: #000;
 background-image: 
     radial-gradient(2px 2px at 20px 30px, #eee, rgba(0,0,0,0)),
@@ -255,15 +273,71 @@ animation: twinkle 4s ease-in-out infinite alternate;
 }`
   }
 ];
+
+// Extract unique types for filter
+const types = [...new Set(animations.map(anim => anim.type))];
+const totalCount = animations.length;
 ---
 
 <Layout 
   title="Animated Backgrounds | Jex" 
   description="High-performance CSS-only animated backgrounds. Copy and paste ready-to-use animations for your next project."
 >
-  <div class="text-center mb-12">
+  <div class="text-center mb-8">
     <h1 class="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-gray-900 to-gray-500 dark:from-white dark:to-white/60 mb-3">Animated Backgrounds</h1>
     <p class="text-gray-600 dark:text-white/50">High-performance CSS-only animated backgrounds. No JS required (except for copying).</p>
+  </div>
+
+  <!-- Counter & Filter Section -->
+  <div class="mb-8 flex flex-col sm:flex-row items-center justify-between gap-4 p-4 rounded-xl bg-gray-100 dark:bg-white/5 border border-black/5 dark:border-white/10">
+    <div class="flex items-center gap-3">
+      <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-gradient-to-br from-pink-500 to-orange-500 text-white font-bold text-lg">
+        <span id="visible-count">{totalCount}</span>
+      </div>
+      <div class="text-left">
+        <p class="text-sm font-medium text-gray-900 dark:text-white">Animations disponibles</p>
+        <p class="text-xs text-gray-500 dark:text-white/50" id="filter-label">Tous les types</p>
+      </div>
+    </div>
+    
+    <!-- Filter Dropdown -->
+    <div class="relative" id="filter-dropdown-container">
+      <button 
+        id="filter-toggle-btn"
+        class="flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg bg-gray-200 dark:bg-white/10 text-gray-700 dark:text-white/80 hover:bg-gray-300 dark:hover:bg-white/20 transition-all border border-black/5 dark:border-white/10"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 0 1-.659 1.591l-5.432 5.432a2.25 2.25 0 0 0-.659 1.591v2.927a2.25 2.25 0 0 1-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 0 0-.659-1.591L3.659 7.409A2.25 2.25 0 0 1 3 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0 1 12 3Z" />
+        </svg>
+        <span id="selected-filter">Tous</span>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-3 transition-transform" id="dropdown-arrow">
+          <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+        </svg>
+      </button>
+      
+      <!-- Dropdown Menu -->
+      <div 
+        id="filter-dropdown"
+        class="absolute right-0 top-full mt-2 w-48 py-2 bg-white dark:bg-[#1a1a1a] rounded-xl border border-black/10 dark:border-white/10 shadow-xl opacity-0 invisible translate-y-2 transition-all duration-200 z-50"
+      >
+        <button 
+          class="filter-btn w-full px-4 py-2 text-left text-sm font-medium text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-white/10 transition-colors flex items-center justify-between"
+          data-type="all"
+        >
+          <span>Tous</span>
+          <span class="text-xs text-gray-400 dark:text-white/40">{totalCount}</span>
+        </button>
+        {types.map((type) => (
+          <button 
+            class="filter-btn w-full px-4 py-2 text-left text-sm font-medium text-gray-700 dark:text-white/70 hover:bg-gray-100 dark:hover:bg-white/10 transition-colors capitalize flex items-center justify-between"
+            data-type={type}
+          >
+            <span>{type}</span>
+            <span class="text-xs text-gray-400 dark:text-white/40">{animations.filter(anim => anim.type === type).length}</span>
+          </button>
+        ))}
+      </div>
+    </div>
   </div>
 
   <!-- Main Previewer -->
@@ -286,18 +360,22 @@ animation: twinkle 4s ease-in-out infinite alternate;
     </div>
   </div>
 
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="animations-grid">
     {animations.map((anim) => (
       <div 
         class="group relative bg-white dark:bg-[#111] border border-black/5 dark:border-white/10 rounded-xl overflow-hidden hover:border-black/20 dark:hover:border-white/20 transition-all shadow-sm dark:shadow-none cursor-pointer bg-card-item"
         data-class={anim.class}
+        data-type={anim.type}
       >
         <!-- Preview -->
         <div class={`h-48 w-full ${anim.class} rounded-t-xl`}></div>
         
         <!-- Info & Actions -->
         <div class="p-4 flex items-center justify-between border-t border-black/5 dark:border-white/5 bg-gray-50 dark:bg-[#0a0a0a]">
-           <span class="font-medium text-gray-800 dark:text-white/80">{anim.name}</span>
+           <div class="flex items-center gap-2">
+             <span class="font-medium text-gray-800 dark:text-white/80">{anim.name}</span>
+             <span class="px-2 py-0.5 text-[10px] font-medium rounded-full bg-gray-200 dark:bg-white/10 text-gray-500 dark:text-white/50 capitalize">{anim.type}</span>
+           </div>
            <button class="copy-btn px-3 py-1.5 text-xs font-medium rounded-lg bg-gray-200 dark:bg-white/10 hover:bg-gray-300 dark:hover:bg-white/20 text-gray-900 dark:text-white transition-colors" data-css={anim.css}>
              Copy CSS
            </button>
@@ -542,10 +620,95 @@ animation: twinkle 4s ease-in-out infinite alternate;
   const previewBg = document.getElementById('preview-bg');
   const mainPreview = document.getElementById('main-preview');
   const fullscreenBtn = document.getElementById('fullscreen-btn');
+  const visibleCount = document.getElementById('visible-count');
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const cards = document.querySelectorAll('.bg-card-item');
+  const filterToggleBtn = document.getElementById('filter-toggle-btn');
+  const filterDropdown = document.getElementById('filter-dropdown');
+  const selectedFilter = document.getElementById('selected-filter');
+  const filterLabel = document.getElementById('filter-label');
+  const dropdownArrow = document.getElementById('dropdown-arrow');
   let currentClass = 'anim-gradient';
+  let isDropdownOpen = false;
   
   // Set initial preview
   previewBg?.classList.add(currentClass);
+
+  // Dropdown Toggle
+  function toggleDropdown() {
+    isDropdownOpen = !isDropdownOpen;
+    if (filterDropdown) {
+      if (isDropdownOpen) {
+        filterDropdown.classList.remove('opacity-0', 'invisible', 'translate-y-2');
+        filterDropdown.classList.add('opacity-100', 'visible', 'translate-y-0');
+        dropdownArrow?.classList.add('rotate-180');
+      } else {
+        filterDropdown.classList.add('opacity-0', 'invisible', 'translate-y-2');
+        filterDropdown.classList.remove('opacity-100', 'visible', 'translate-y-0');
+        dropdownArrow?.classList.remove('rotate-180');
+      }
+    }
+  }
+
+  function closeDropdown() {
+    isDropdownOpen = false;
+    if (filterDropdown) {
+      filterDropdown.classList.add('opacity-0', 'invisible', 'translate-y-2');
+      filterDropdown.classList.remove('opacity-100', 'visible', 'translate-y-0');
+      dropdownArrow?.classList.remove('rotate-180');
+    }
+  }
+
+  filterToggleBtn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    toggleDropdown();
+  });
+
+  // Close dropdown when clicking outside
+  document.addEventListener('click', (e) => {
+    const container = document.getElementById('filter-dropdown-container');
+    if (container && !container.contains(e.target as Node)) {
+      closeDropdown();
+    }
+  });
+
+  // Filter Logic
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const type = (btn as HTMLElement).dataset.type || 'all';
+      const typeName = type === 'all' ? 'Tous' : type.charAt(0).toUpperCase() + type.slice(1);
+      
+      // Update selected filter text
+      if (selectedFilter) {
+        selectedFilter.textContent = typeName;
+      }
+      
+      // Update filter label
+      if (filterLabel) {
+        filterLabel.textContent = type === 'all' ? 'Tous les types' : `Type: ${typeName}`;
+      }
+      
+      // Filter cards
+      let count = 0;
+      cards.forEach(card => {
+        const cardType = (card as HTMLElement).dataset.type;
+        if (type === 'all' || cardType === type) {
+          (card as HTMLElement).style.display = '';
+          count++;
+        } else {
+          (card as HTMLElement).style.display = 'none';
+        }
+      });
+      
+      // Update counter
+      if (visibleCount) {
+        visibleCount.textContent = count.toString();
+      }
+      
+      // Close dropdown
+      closeDropdown();
+    });
+  });
 
   document.querySelectorAll('.bg-card-item').forEach(card => {
     card.addEventListener('click', () => {
